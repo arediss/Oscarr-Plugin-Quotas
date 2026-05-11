@@ -4,13 +4,21 @@
  * insists on the `X-Requested-With: oscarr` header — keep it on every call.
  */
 
-const CSRF_HEADERS = { 'X-Requested-With': 'oscarr', 'Content-Type': 'application/json' } as const;
+const CSRF_HEADERS = { 'X-Requested-With': 'oscarr' } as const;
 
 async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
+  // Only send Content-Type when there's actually a body to parse — otherwise Fastify
+  // tries to parse an empty payload as JSON and rejects the request with HTTP 400
+  // ("Unexpected end of JSON input"), which bites every DELETE call.
+  const headers: Record<string, string> = {
+    ...CSRF_HEADERS,
+    ...(init.body !== undefined && init.body !== null ? { 'Content-Type': 'application/json' } : {}),
+    ...(init.headers as Record<string, string> | undefined),
+  };
   const res = await fetch(path, {
     credentials: 'include',
     ...init,
-    headers: { ...CSRF_HEADERS, ...(init.headers as Record<string, string> | undefined) },
+    headers,
   });
   if (!res.ok) {
     let message = `${res.status} ${res.statusText}`;
