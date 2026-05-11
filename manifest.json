@@ -1,0 +1,43 @@
+{
+  "id": "quotas",
+  "name": "Quotas",
+  "version": "0.1.0",
+  "apiVersion": "v1",
+  "description": "Per-user / per-role request quotas. Caps how many movies or TV shows each user can request within a sliding window (hour / day / week / month).",
+  "author": "Arediss",
+  "entry": "dist/index.js",
+  "frontend": "frontend/index.tsx",
+  "capabilities": [
+    "users:read",
+    "settings:plugin",
+    "requests:read",
+    "permissions"
+  ],
+  "capabilityReasons": {
+    "users:read": "Resolves a user's role to pick the policy that applies, and lists users for the admin overview.",
+    "settings:plugin": "Stores policies and overrides in the plugin data dir.",
+    "requests:read": "Counts the user's recent requests to enforce the quota.",
+    "permissions": "Registers an admin-only permission gate for the management routes."
+  },
+  "hooks": {
+    "routes": {
+      "prefix": "/api/plugins/quotas"
+    },
+    "ui": [
+      {
+        "hookPoint": "admin.tabs",
+        "props": {
+          "label": "Quotas",
+          "icon": "Gauge"
+        },
+        "order": 80
+      }
+    ]
+  },
+  "engines": {
+    "oscarr": ">=0.8.1 <1.0.0",
+    "testedAgainst": [
+      "0.8.1"
+    ]
+  }
+}
