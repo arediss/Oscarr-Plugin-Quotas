@@ -1,6 +1,6 @@
 {
   "name": "oscarr-plugin-quotas",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Per-user / per-role request quotas for Oscarr.",
   "type": "module",
   "main": "dist/index.js",

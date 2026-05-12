@@ -1,7 +1,7 @@
 {
   "id": "quotas",
   "name": "Quotas",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "apiVersion": "v1",
   "description": "Per-user / per-role request quotas. Caps how many movies or TV shows each user can request within a sliding window (hour / day / week / month).",
   "author": "Arediss",
@@ -35,9 +35,9 @@
     ]
   },
   "engines": {
-    "oscarr": ">=0.8.1 <1.0.0",
+    "oscarr": ">=0.8.2 <1.0.0",
     "testedAgainst": [
-      "0.8.1"
+      "0.8.2"
     ]
   }
 }
